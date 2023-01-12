@@ -1,0 +1,52 @@
+on:
+  workflow_dispatch:
+    inputs:
+      release_note:
+        description: '출시 노트 작성해주세요.'
+        required: true
+        default: "헤헤"
+        type: string
+
+      choice_testers:
+        description: '테스터 그룹을 선택하여주세요.'
+        required: true
+        default: 'dev-dev'
+        type: choice
+        options:
+        - 하하하호호호
+        - dev-dev
+
+name: efef (Branch) App distribution
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            ref: ${{ github.event.inputs.branch }}
+      - uses: actions/setup-node@v1 # This is optional on linux and macOS
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Fetch credential file from secrets
+        id: fetch_credential_file
+        uses: timheuer/base64-to-file@v1
+        with:
+          encodedString: ${{ secrets.CREDENTIAL_FILE }}
+          fileName: 'credential_file.json'
+      - name: Move credential file to repository location
+        run: mv ${{ steps.fetch_credential_file.outputs.filePath }} /home/runner/work/Firebase-Distribution-Github-Action/Firebase-Distribution-Github-Action/
+
+      - name: build release
+        run: ./gradlew assembleDebug
+
+      - name: Upload artifact to Firebase Distribution
+        uses: ./
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          serviceCredentialsFileContent: credential_file.json
+          groups: ${{ github.event.inputs.choice_testers }}
+          releaseNotes: ${{ github.event.inputs.release_note }}
+          file: ApiDemos-debug.apk
