@@ -31,6 +31,17 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Fetch credential file from secrets
         id: fetch_credential_file
         uses: timheuer/base64-to-file@v1
