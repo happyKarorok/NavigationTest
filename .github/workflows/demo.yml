@@ -2,10 +2,6 @@ name: demo (Branch) App distribution
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: 'Define branch name'
-        required: true
-
       relse_note:
         description: '출시 노트 작성해주세요.'
         required: true
