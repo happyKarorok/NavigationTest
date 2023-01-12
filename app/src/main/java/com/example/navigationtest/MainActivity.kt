@@ -2,6 +2,7 @@ package com.example.navigationtest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 
@@ -11,6 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val crashButton = Button(this)
+        Log.d("KJAr", "fefeffefefef")
         crashButton.text = "Test Crash"
         crashButton.setOnClickListener {
             throw RuntimeException("Test Crash") // Force a crash
