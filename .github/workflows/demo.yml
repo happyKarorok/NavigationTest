@@ -30,7 +30,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-
       - name: Fetch credential file from secrets
         id: fetch_credential_file
         uses: timheuer/base64-to-file@v1
