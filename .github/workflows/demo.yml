@@ -100,4 +100,4 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE }}
           groups: ${{ github.event.inputs.choice_testers }}
           releaseNotes: 'release hehe'
-          file: app/build/outputs/apk/debug/app-debug.apk
+          file: app/build/outputs/apk/release/app-release-unsigned.apk
