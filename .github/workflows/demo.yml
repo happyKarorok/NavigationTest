@@ -6,13 +6,13 @@ on:
         description: '출시 노트 작성해주세요.'
         required: true
         default: "헤헤"
-        type: String
+        type: string
 
       choice_testers:
         description: '테스터 그룹을 선택하여주세요.'
         required: true
         default: 'warning'
-        type: choice
+        type: multi-choice
         options:
         - info
         - warning
