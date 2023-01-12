@@ -76,5 +76,24 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID}}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE }}
           groups: ${{ github.event.inputs.choice_testers }}
-          releaseNotes: ${{ github.event.inputs.release_note }}
+          releaseNotes: 'debug hehe'
+          file: app/build/outputs/apk/debug/app-debug.apk
+
+
+
+  runAppDistributionRelease:
+    needs: run
+    runs-on: ubuntu-latest
+    if: github.event.inputs.choice_build_flavor == env.RELEASE
+    steps:
+      - name: build release
+        run: ./gradlew assembleRelease
+
+      - name: Upload artifact to Firebase Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.4.0
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE }}
+          groups: ${{ github.event.inputs.choice_testers }}
+          releaseNotes: 'release hehe'
           file: app/build/outputs/apk/debug/app-debug.apk
