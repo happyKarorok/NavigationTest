@@ -61,25 +61,13 @@ jobs:
           encodedString: ${{ secrets.CREDENTIAL_FILE }}
           fileName: 'credential_file.json'
 
-      - name: build release
-        run: ./gradlew assembleDebug
-
-      - name: Upload artifact to Firebase Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.4.0
-        with:
-          appId: ${{secrets.FIREBASE_APP_ID}}
-          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE }}
-          groups: ${{ github.event.inputs.choice_testers }}
-          releaseNotes: ${{ github.event.inputs.release_note }}
-          file: app/build/outputs/apk/debug/app-debug.apk
-
 
   runAppDistributionDebug:
-    if: ${{ github.event.inputs.choice_build_flavor == env.DEBUG }}
     needs: run
     runs-on: ubuntu-latest
-      steps:
-      - name: build release
+    if: github.event.inputs.choice_build_flavor == env.DEBUG
+    steps:
+      - name: build debug
         run: ./gradlew assembleDebug
 
       - name: Upload artifact to Firebase Distribution
