@@ -65,7 +65,7 @@ jobs:
   runAppDistributionDebug:
     needs: run
     runs-on: ubuntu-latest
-    if: {{ github.event.inputs.choice_build_flavor == env.DEBUG }}
+    if: ${{ github.event.inputs.choice_build_flavor == env.DEBUG }}
     steps:
       - name: build debug
         run: ./gradlew assembleDebug
@@ -84,7 +84,7 @@ jobs:
   runAppDistributionRelease:
     needs: run
     runs-on: ubuntu-latest
-    if: {{ github.event.inputs.choice_build_flavor == env.RELEASE }}
+    if: ${{ github.event.inputs.choice_build_flavor == env.RELEASE }}
     steps:
       - name: build release
         run: ./gradlew assembleRelease
